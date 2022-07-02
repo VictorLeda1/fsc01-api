@@ -9,7 +9,6 @@ const prisma = new PrismaClient()
 
 router.get('/tweets', async ctx => {
     const [, token] = ctx.request.headers?.authorization?.split(' ') || []
-
     if (!token) {
         ctx.status = 401
         return
@@ -17,12 +16,17 @@ router.get('/tweets', async ctx => {
 
     try {
         jwt.verify(token, process.env.JWT_SECRET)
-        const tweets = await prisma.tweet.findMany()
+        const tweets = await prisma.tweet.findMany({
+            include: {
+                user: true
+            }
+        })
         ctx.body = tweets
     } catch (error) {
         ctx.status = 401
-        return
+        return    
     }
+    
 })
 
 router.post('/tweets', async ctx => {
