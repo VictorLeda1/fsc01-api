@@ -10,7 +10,7 @@
     "email": "victorleda.js@gmail.com"
   },
   "scripts": {
-    "dev": "node server.js"
+    "dev": "node api/index.js"
   },
   "dependencies": {
     "@koa/cors": "^3.3.0",
